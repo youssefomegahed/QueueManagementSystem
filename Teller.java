@@ -22,6 +22,7 @@ public class Teller implements Runnable{
          
             int currentNumber = queue.getHead().number;
             int currentTimeDuration = queue.getHead().timeDuration;
+            String type = queue.getHead().type;
 
             try {
                 queue.remove();
@@ -29,7 +30,7 @@ public class Teller implements Runnable{
                 e1.printStackTrace();
             }
 
-            System.out.println("Teller " + id + " is serving customer " + currentNumber);
+            System.out.println("Teller " + id + " is serving " + type + " customer " + currentNumber);
             
             try {
                 Thread.sleep(currentTimeDuration * 1000);
@@ -37,7 +38,7 @@ public class Teller implements Runnable{
                 e.printStackTrace();
                 Thread.currentThread().interrupt();
             }
-            System.out.println("Teller " + id +  " is done serving customer " + currentNumber);
+            System.out.println("Teller " + id +  " is done serving " + type + " customer " + currentNumber + " (took " + currentTimeDuration + " seconds)");
            
 
         }

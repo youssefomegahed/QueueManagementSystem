@@ -9,6 +9,10 @@ public class Queue {
         queue.addLast(customer);
     }
 
+    public void addFirst(Customer customer) {
+        queue.addFirst(customer);
+    }
+
     public void remove() throws InterruptedException {
         queue.take();
     }

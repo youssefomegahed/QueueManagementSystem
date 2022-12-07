@@ -11,8 +11,10 @@ public class QueueManager {
         Queue queue = new Queue();
 
 
-        int N = 3;
-        int M = 10;
+        int N = 5;
+        int M = 30;
+
+        ExecutorService executorService = Executors.newCachedThreadPool();
 
         // customer numbers range between 1 and M
         // makes more sense than the 0 to M mentioned in the assignment
@@ -21,11 +23,16 @@ public class QueueManager {
             String type = (rand <= 3) ? "vip" : "regular"; // 30% of customers are vip, 70% are regular
             int timeDuration = (int) (Math.random() * 10) + 1; // random number between 1 and 10 seconds
             Customer customer = new Customer(type, i, timeDuration);
-            queue.add(customer);
+            if (type.equals("vip")) {
+                queue.addFirst(customer);
+            } else {
+                queue.add(customer);
+            }
         }
 
+        System.out.println("There are " + queue.size() + " customers in the queue.");
 
-        ExecutorService executorService = Executors.newCachedThreadPool();
+
 
         for (int i = 1; i <= N; i++) {
             executorService.execute(new Teller(i, queue));
@@ -39,6 +46,7 @@ public class QueueManager {
         }
 
         System.out.println("All tellers finished");
+        System.out.println("There are " + queue.size() + " customers left in the queue.");
 
     }
 
